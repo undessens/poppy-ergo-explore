@@ -18,6 +18,8 @@ class SimpleServer(OSCServer):
 
     
     def handleMsg(self,oscAddress, tags, data, client_address):
+        print("OSC message received on : "+oscAddress)
+
         splitAddress = oscAddress.split("/")
         
         ############## MOTOR #############
@@ -62,6 +64,7 @@ def main():
 
         server = SimpleServer(('192.168.2.6', 12344))    
         try:
+            print(" Serve forever")
             server.serve_forever()
         except:
             print(" ERROR : sequence -  on running OSC server")
