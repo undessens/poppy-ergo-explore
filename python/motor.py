@@ -14,7 +14,7 @@ class poppy_motor:
 		if(newVal>=-90 and newVal <= 90):
 			self.currentValue = newVal
 			self.isModified = True
-			self.moveTo(diff)
+			self.moveTo(self.currentValue)
 
 
 
