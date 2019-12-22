@@ -26,7 +26,7 @@ class poppy_motor:
 		if(abs(diff)>0):
 			self.moveTo(diff)
 
-	def moveTo(dist):
+	def moveTo(self, dist):
 		print(" move to "+str(dist))
 		self.motor_instance.compliant = False
 		self.motor_instance.goal_position = dist
