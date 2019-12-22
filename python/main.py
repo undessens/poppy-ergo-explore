@@ -12,7 +12,7 @@ class SimpleServer(OSCServer):
     maxPingDelay = 6
     # OpenStageControls script pings every 3 seconds
     def __init__(self,t):
-        OSC.OSCServer.__init__(self,t)
+        OSCServer.__init__(self,t)
         self.selfInfos = t
         self.addMsgHandler('default', self.handleMsg)
 
