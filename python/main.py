@@ -6,7 +6,7 @@ import struct
 from motor import poppy_motor
 from pypot.creatures import PoppyErgoJr
 
-from OSC import OSCClient, OSCMessage
+from OSC import OSCClient, OSCMessage, OSCServer
 
 class SimpleServer(OSC.OSCServer):
     maxPingDelay = 6
