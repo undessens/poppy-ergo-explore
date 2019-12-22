@@ -12,9 +12,11 @@ class poppy_motor:
 
 	def setValue(self, newVal):
 		if(newVal>=-90 and newVal <= 90):
+			print("Set value")
+			print ("newVal")
 			self.currentValue = newVal
 			self.isModified = True
-			self.moveTo(self.currentValue)
+			self.moveTo(newVal)
 
 
 
