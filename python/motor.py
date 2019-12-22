@@ -1,4 +1,4 @@
-
+import time
 
 class poppy_motor:
 	def __init__(self, _id):
@@ -14,6 +14,8 @@ class poppy_motor:
 		if(newVal>=-90 and newVal <= 90):
 			self.currentValue = newVal
 			self.isModified = True
+			self.moveTo(diff)
+
 
 
 	def update(self):
@@ -24,5 +26,13 @@ class poppy_motor:
 
 	def moveTo(dist):
 		print(" move to "+str(dist))
+		self.motor_instance.compliant = False
+		self.motor_instance.goal_position = dist
+		time.sleep(1)
+		print(" motor end move ")
+		self.motor_instance.compliant = True
+
+
+
 
 
