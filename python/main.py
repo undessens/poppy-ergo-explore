@@ -48,7 +48,7 @@ def main():
             list_of_motor.append (poppy_motor(i+1) )
 
         global ergoJr 
-        ergoJr = PoppyErgoJr()
+        ergoJr = PoppyErgoJr(camera='dummy')
 
         
         # OSC connect
