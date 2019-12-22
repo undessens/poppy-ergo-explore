@@ -60,7 +60,7 @@ def main():
         for m in list_of_motor :
             m.motor_instance = ergoJr.motors[(m.id -1)]
 
-        server = SimpleServer(('127.0.0.1', 12344))    
+        server = SimpleServer(('192.168.2.6', 12344))    
         try:
             server.serve_forever()
         except:
