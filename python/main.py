@@ -8,7 +8,7 @@ from pypot.creatures import PoppyErgoJr
 
 from OSC import OSCClient, OSCMessage, OSCServer
 
-class SimpleServer(OSC.OSCServer):
+class SimpleServer(OSCServer):
     maxPingDelay = 6
     # OpenStageControls script pings every 3 seconds
     def __init__(self,t):
