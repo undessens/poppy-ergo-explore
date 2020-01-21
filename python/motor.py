@@ -18,7 +18,6 @@ class poppy_motor:
 			self.currentValue = newVal
 			self.isModified = True
 			self.asked_position = newVal
-			self.moveTo(newVal)
 
 	def update(self):
 		#Can smooth the final value send in OSC, using an easing method
