@@ -32,7 +32,7 @@ class poppy_motor:
 			print("Position reached")
 			smoothPos = self.position
 			res = 0
-		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res))
+		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res)+ "smooth: "+str(self.smooth))
 
 
 	def moveTo(self, directPos):
