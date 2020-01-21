@@ -27,18 +27,12 @@ class poppy_motor:
 
 	def moveTo(self, dist):
 		print(" move to "+str(dist))
-		self.motor_instance.goal_position = dist
-		time.sleep(1)
-		print(" motor end move ")
-
 
 	def setCompliant(self, isCompliant):
-		self.motor_instance.compliant = isCompliant
 		print(" Motor compliant set to : ")
-		print("isCompliant")
+		print(isCompliant)
 
 	def setLedColor(self, colorMsg):
-		self.motor_instance.led = colorMsg
 		print(" Motor led set to : "+colorMsg)
 
 

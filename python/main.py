@@ -2,10 +2,18 @@ import os
 import sys
 import glob
 import time
+import threading
 import struct
-from motor import poppy_motor
-from pypot.creatures import PoppyErgoJr
+import platform
+import socket
 
+
+if( platform.system()=='Darwin'):
+    from motor_fake import poppy_motor
+else:
+    from motor import poppy_motor
+    from pypot.creatures import PoppyErgoJr
+    
 from OSC import OSCClient, OSCMessage, OSCServer
 
 class SimpleServer(OSCServer):
@@ -21,13 +29,45 @@ class SimpleServer(OSCServer):
         print("OSC message received on : "+oscAddress)
 
         splitAddress = oscAddress.split("/")
+        print(splitAddress)
         
-        ############## MOTOR #############
+        ############## individual MOTOR #############
         if(splitAddress[1]=="motor"):
             print("motor id:"+splitAddress[2]+" angle: "+str(data[0]))
             num = int(splitAddress[2])
             list_of_motor[num].setValue(data[0])
-            list_of_motor[num].update()
+
+        if(splitAddress[1]=="compliant"):
+            value = data[0] > 0
+            if(value):
+                print("compliant id:"+splitAddress[2]+"true")
+            else:
+                print("compliant id:"+splitAddress[2]+" false")    
+            num = int(splitAddress[2])
+            list_of_motor[num].setCompliant(data[0])
+        
+        if(splitAddress[1]=="led"):
+            print("motor id:"+splitAddress[2]+" led: "+str(data[0]))
+            num = int(splitAddress[2])
+            list_of_motor[num].setLedColor(data[0])
+
+        ############## entire robot #############
+        if(splitAddress[1]=="robot"):
+            if(splitAddress[2]=="compliant"):
+                set_compliant_robot(data[0]>0)
+            if(splitAddress[2]=="posture"):
+                print("do something")
+
+        ############## APP itself #############
+        if(splitAddress[1]=="app"):
+            if(splitAddress[2]=="close"):
+                print("closing the app")
+                closing_app()
+
+
+        
+
+
 
 
 def send_osc(address, value):
@@ -40,37 +80,80 @@ def send_osc(address, value):
         except: 
                 print ("error sending osc message")
 
+def update_robot():
+    for i in range(6 ):
+            list_of_motor[i].update()
+
+def set_compliant_robot(isCompliant):
+    for i in range(6 ):
+            list_of_motor[i].setCompliant(isCompliant)
 
 def main():
         
-
         global list_of_motor 
         list_of_motor = []
         for i in range(6 ):
             list_of_motor.append (poppy_motor(i+1) )
-
+ 
         global ergoJr 
-        ergoJr = PoppyErgoJr(camera='dummy')
-
-        
+        if( platform.system()=='Linux'):
+            ergoJr = PoppyErgoJr(camera='dummy')
+   
         # OSC connect
         global oscClient
         oscClient = OSCClient()
         oscClient.connect( ("localhost",12345 ))
+
+        if( platform.system()=='Linux'):
+            for m in list_of_motor :
+                m.motor_instance = ergoJr.motors[(m.id -1)]
         
+        myip = socket.gethostbyname(socket.gethostname())
+        
+        print("IP adress is : "+myip)
+        try:
+            server = SimpleServer((myip, 12344)) 
+        except:
+            print(" ERROR : creating server") 
+        print("server created") 
+        try:
+            st = threading.Thread(target = server.serve_forever) 
+        except:
+            print(" ERROR : creating thread") 
 
-        for m in list_of_motor :
-            m.motor_instance = ergoJr.motors[(m.id -1)]
-
-        server = SimpleServer(('192.168.2.6', 12344))    
+        print("thread created") 
         try:
             print(" Serve forever")
-            server.serve_forever()
+            st.start()
         except:
             print(" ERROR : sequence -  on running OSC server")
 
-                          
+        print(" This is after serving forever")  
+        time.sleep(4)
 
+        global runningApp
+        runningApp = True
+
+        while runningApp:
+            try:
+                update_robot()
+                time.sleep(1)
+            except :
+                print("User attempt to close the programm")
+                runningApp = False
+        
+        #CLOSING THREAD AND SERVER
+        print(" Ending programme") 
+        server.running = False
+        print(" Join thread") 
+        st.join()
+        server.close()
+        print(" This is probably the end") 
+
+def closing_app():
+    global runningApp
+    runningApp = False
+    print("Closing App")
 
 if __name__ == "__main__":
     main()
