@@ -19,7 +19,7 @@ from OSC import OSCClient, OSCMessage, OSCServer
 
 class SimpleServer(OSCServer):
     maxPingDelay = 6
-    global sleepingValue
+    
     # OpenStageControls script pings every 3 seconds
     def __init__(self,t):
         OSCServer.__init__(self,t)
@@ -28,6 +28,7 @@ class SimpleServer(OSCServer):
 
     
     def handleMsg(self,oscAddress, tags, data, client_address):
+        global sleepingValue
         #print("OSC message received on : "+oscAddress)
         splitAddress = oscAddress.split("/")
         #print(splitAddress)
