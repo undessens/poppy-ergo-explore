@@ -35,7 +35,7 @@ class poppy_motor:
 
 
 	def moveTo(self, directPos):
-		print(" move to "+str(directPos))
+		#print(" move to "+str(directPos))
 		self.motor_instance.goal_position = directPos
 
 
