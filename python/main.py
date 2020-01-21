@@ -86,8 +86,9 @@ def send_osc(address, value):
                 print ("error sending osc message")
 
 def update_robot():
-    for i in range(6 ):
-            list_of_motor[i].update()
+    #for i in range(6 ):
+    #        list_of_motor[i].update()
+    list_of_motor[5].update()
 
 def set_compliant_robot(isCompliant):
     for i in range(6 ):
