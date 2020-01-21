@@ -21,7 +21,7 @@ class poppy_motor:
 
 	def update(self):
 		#Can smooth the final value send in OSC, using an easing method
-		print("update")
+		#print("update")
 		self.position = self.motor_instance.present_position
 		diff = self.asked_position - self.position
 		if(abs(diff)>2):
@@ -29,10 +29,10 @@ class poppy_motor:
 			smoothPos = self.position + res
 			self.moveTo(smoothPos)
 		else:
-			print("Position reached")
+			#print("Position reached")
 			smoothPos = self.position
 			res = 0
-		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res)+ "smooth: "+str(self.smooth))
+		#print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res)+ "smooth: "+str(self.smooth))
 
 
 	def moveTo(self, directPos):

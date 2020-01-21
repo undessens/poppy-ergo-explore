@@ -67,6 +67,10 @@ class SimpleServer(OSCServer):
         if(splitAddress[1]=="robot"):
             if(splitAddress[2]=="compliant"):
                 set_compliant_robot(data[0]>0)
+            if(splitAddress[2]=="speed"):
+                set_speed_robot(data[0])
+            if(splitAddress[2]=="smooth"):
+                set_smooth_robot(data[0])
             if(splitAddress[2]=="posture"):
                 print("do something")
 
@@ -95,13 +99,21 @@ def send_osc(address, value):
                 print ("error sending osc message")
 
 def update_robot():
-    #for i in range(6 ):
-    #        list_of_motor[i].update()
-    list_of_motor[5].update()
+    for i in range(6 ):
+            list_of_motor[i].update()
+
 
 def set_compliant_robot(isCompliant):
     for i in range(6 ):
             list_of_motor[i].setCompliant(isCompliant)
+
+def set_smooth_robot(newSmooth):
+    for i in range(6 ):
+            list_of_motor[i].setSmooth(newSmooth)
+
+def set_speed_robot(newSpeed):
+    for i in range(6 ):
+            list_of_motor[i].setSpeed(newSpeed)
 
 def main():
         
@@ -166,6 +178,7 @@ def main():
         
         #CLOSING THREAD AND SERVER
         print(" Ending programme") 
+        set_compliant_robot(True)
         server.running = False
         print(" Join thread") 
         st.join()
