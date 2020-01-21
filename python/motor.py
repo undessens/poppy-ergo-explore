@@ -22,6 +22,7 @@ class poppy_motor:
 
 	def update(self):
 		#Can smooth the final value send in OSC, using an easing method
+		self.position = self.motor_instance.present_position
 		diff = self.asked_position - self.position
 		if(abs(diff)>0):
 			self.moveTo(self.position + diff*self.smooth)
@@ -41,6 +42,10 @@ class poppy_motor:
 	def setLedColor(self, colorMsg):
 		self.motor_instance.led = colorMsg
 		print(" Motor led set to : "+colorMsg)
+	
+	def setSpeed(self, newSpeed):
+		self.motor_instance.moving_speed = newSpeed
+		print(" Motor speed set to : "+str(newSpeed))
 
 
 
