@@ -108,7 +108,10 @@ def main():
             for m in list_of_motor :
                 m.motor_instance = ergoJr.motors[(m.id -1)]
         
-        myip = socket.gethostbyname(socket.gethostname())
+        if(len(sys.argv)>1):
+            myip = str(sys.argv[1])
+        else:
+            myip = socket.gethostbyname(socket.gethostname())
         
         print("IP adress is : "+myip)
         try:
