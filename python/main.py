@@ -115,12 +115,21 @@ def set_speed_robot(newSpeed):
     for i in range(6 ):
             list_of_motor[i].setSpeed(newSpeed)
 
+def init_robot_pos():
+    set_speed_robot(240)
+    set_smooth_robot(4) #this is 4%
+    set_compliant_robot(False)
+
+
+
+
 def main():
-        
+        # CREATE INSTANCE OF POPPY MOTOR
         global list_of_motor 
         list_of_motor = []
         for i in range(6 ):
             list_of_motor.append (poppy_motor(i+1) )
+
  
         global ergoJr 
         if( platform.system()=='Linux'):
@@ -132,17 +141,24 @@ def main():
         oscClient = OSCClient()
         oscClient.connect( ("localhost",12345 ))
 
+        #ASSOCIATE ERGOJR TO MOTORS INSTANCE
         if( platform.system()=='Linux'):
             print("REAL MOTORS : motors init")
             for m in list_of_motor :
                 m.motor_instance = ergoJr.motors[(m.id -1)]
+
+                
+        #INIT ROBOT POS
+        init_robot_pos()
         
+        #SET LOCAL IP ADRESS
         if(len(sys.argv)>1):
             myip = str(sys.argv[1])
         else:
             myip = socket.gethostbyname(socket.gethostname())
-        
         print("IP adress is : "+myip)
+
+        # CREATE OSC SERVER
         try:
             server = SimpleServer((myip, 12344)) 
         except:
@@ -161,13 +177,14 @@ def main():
             print(" ERROR : sequence -  on running OSC server")
 
         print(" This is after serving forever")  
-        time.sleep(4)
 
+        # GLOBAL PARAMETER OF RUNNING APP
         global runningApp
         global sleepingValue
         runningApp = True
-        sleepingValue = 1
+        sleepingValue = 0.02
 
+        # MAIN LOOP
         while runningApp:
             try:
                 update_robot()

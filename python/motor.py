@@ -3,13 +3,12 @@ import time
 class poppy_motor:
 	def __init__(self, _id):
 		self.id = _id
-		self.speed = 50
 		self.position  = 0
 		self.asked_position = 0
 		self.compliant = False
 		self.led = "black"
 		self.motor_instance = None
-		self.smooth = 0.1
+		self.smooth = 0.08
 
 	def setValue(self, newVal):
 		if(newVal>=-90 and newVal <= 90):
@@ -20,7 +19,7 @@ class poppy_motor:
 			self.asked_position = newVal
 
 	def update(self):
-		#Can smooth the final value send in OSC, using an easing method
+		#SMOOTH MOTION
 		#print("update")
 		self.position = self.motor_instance.present_position
 		diff = self.asked_position - self.position
@@ -58,6 +57,7 @@ class poppy_motor:
 	
 	def setSpeed(self, newSpeed):
 		self.motor_instance.moving_speed = newSpeed
+		self.speed = newSpeed
 		print(" Motor speed set to : "+str(newSpeed))
 
 
