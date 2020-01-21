@@ -5,9 +5,9 @@
 #X obj 32 94 print fromMrPeach;
 #X msg 22 -4 port 9999;
 #X obj 437 -25 hsl 128 15 -23 25 0 0 empty empty position\ to\ reach
--2 -8 0 10 -262144 -1 -1 2100 0;
+-2 -8 0 10 -262144 -1 -1 1100 0;
 #X obj 537 178 hradio 23 0 0 6 empty empty empty 0 -8 0 10 -262144
--1 -1 3;
+-1 -1 4;
 #X obj 297 254 s toOSC;
 #X msg 298 132 /robot/compliant \$1;
 #X obj 249 109 tgl 16 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -111,9 +111,9 @@
 1;
 #X msg 448 36 off;
 #X obj 542 89 hsl 128 15 0 250 0 0 empty empty speed -2 -8 0 10 -262144
--1 -1 12100 0;
+-1 -1 10100 0;
 #X obj 563 129 hsl 128 15 0 99 0 0 empty empty smooth -2 -8 0 10 -262144
--1 -1 1100 0;
+-1 -1 8100 0;
 #X floatatom 430 0 5 0 0 0 - - -, f 5;
 #X obj 320 155 hsl 128 15 0 1 0 0 empty empty fps -2 -8 0 10 -262144
 -1 -1 400 0;
@@ -125,6 +125,7 @@
 #X msg 271 31 /robot/speed \$1;
 #X msg 301 83 /robot/smooth \$1;
 #X floatatom 583 153 5 0 0 0 - - -, f 5;
+#X msg 533 38 green;
 #X connect 0 0 1 0;
 #X connect 0 0 3 0;
 #X connect 2 0 0 0;
@@ -151,3 +152,4 @@
 #X connect 26 0 28 0;
 #X connect 27 0 7 0;
 #X connect 28 0 7 0;
+#X connect 30 0 13 1;

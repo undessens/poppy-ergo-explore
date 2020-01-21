@@ -117,7 +117,7 @@ def set_speed_robot(newSpeed):
 
 def init_robot_pos():
     set_speed_robot(240)
-    set_smooth_robot(4) #this is 4%
+    set_smooth_robot(9) #this is 4%
     set_compliant_robot(False)
 
 
@@ -182,7 +182,7 @@ def main():
         global runningApp
         global sleepingValue
         runningApp = True
-        sleepingValue = 0.02
+        sleepingValue = 0.05
 
         # MAIN LOOP
         while runningApp:
