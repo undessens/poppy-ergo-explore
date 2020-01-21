@@ -17,6 +17,7 @@ class poppy_motor:
 			print (newVal)
 			self.currentValue = newVal
 			self.isModified = True
+			self.asked_position = newVal
 			self.moveTo(newVal)
 
 	def update(self):

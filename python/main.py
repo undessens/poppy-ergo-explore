@@ -10,6 +10,7 @@ import socket
 
 if( platform.system()=='Darwin'):
     from motor_fake import poppy_motor
+    print("FAKE")
 else:
     from motor import poppy_motor
     from pypot.creatures import PoppyErgoJr
@@ -26,14 +27,13 @@ class SimpleServer(OSCServer):
 
     
     def handleMsg(self,oscAddress, tags, data, client_address):
-        print("OSC message received on : "+oscAddress)
-
+        #print("OSC message received on : "+oscAddress)
         splitAddress = oscAddress.split("/")
-        print(splitAddress)
+        #print(splitAddress)
         
         ############## individual MOTOR #############
         if(splitAddress[1]=="motor"):
-            print("motor id:"+splitAddress[2]+" angle: "+str(data[0]))
+            #print("motor id:"+splitAddress[2]+" angle: "+str(data[0]))
             num = int(splitAddress[2])
             list_of_motor[num].setValue(data[0])
 
@@ -98,6 +98,7 @@ def main():
         global ergoJr 
         if( platform.system()=='Linux'):
             ergoJr = PoppyErgoJr(camera='dummy')
+            print("REAL MOTORS")
    
         # OSC connect
         global oscClient
@@ -105,6 +106,7 @@ def main():
         oscClient.connect( ("localhost",12345 ))
 
         if( platform.system()=='Linux'):
+            print("REAL MOTORS : motors init")
             for m in list_of_motor :
                 m.motor_instance = ergoJr.motors[(m.id -1)]
         
