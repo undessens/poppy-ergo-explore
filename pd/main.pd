@@ -1,13 +1,13 @@
-#N canvas 592 116 811 240 10;
+#N canvas 591 53 811 217 10;
 #X obj 22 52 mrpeach/unpackOSC;
 #X obj 22 124 s fromOSC;
 #X obj 22 19 mrpeach/udpreceive 9999;
 #X obj 32 94 print fromMrPeach;
 #X msg 22 -4 port 9999;
-#X obj 437 15 hsl 128 15 -90 90 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 4800 0;
-#X obj 537 148 hradio 23 0 0 5 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
+#X obj 437 15 hsl 128 15 -90 90 0 0 empty empty position\ to\ reach
+-2 -8 0 10 -262144 -1 -1 9700 0;
+#X obj 537 178 hradio 23 0 0 6 empty empty empty 0 -8 0 10 -262144
+-1 -1 5;
 #X obj 297 174 s toOSC;
 #X msg 298 82 /robot/compliant \$1;
 #X obj 298 10 tgl 65 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
@@ -59,11 +59,11 @@
 1;
 #X obj 172 133 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#N canvas 207 125 470 425 one_motor_only 1;
-#X obj 273 24 inlet;
-#X obj 273 97 makefilename /motor/%d;
-#X obj 273 135 makefilename /led/%d;
-#X obj 273 174 makefilename /compliant/%d;
+#N canvas 207 125 856 522 one_motor_only 0;
+#X obj 443 24 inlet;
+#X obj 443 97 makefilename /motor/%d;
+#X obj 443 135 makefilename /led/%d;
+#X obj 443 174 makefilename /compliant/%d;
 #X obj 40 24 inlet;
 #X obj 81 24 inlet;
 #X obj 131 24 inlet;
@@ -71,8 +71,14 @@
 #X obj 39 114 prepend /motor/1;
 #X obj 82 152 prepend /led/1;
 #X obj 146 191 prepend /compliant/1;
-#X obj 38 282 s toOSC;
-#X obj 273 55 + 0;
+#X obj 38 362 s toOSC;
+#X obj 443 55 + 0;
+#X obj 226 223 prepend /speed/1;
+#X obj 311 263 prepend /smooth/1;
+#X obj 208 24 inlet;
+#X obj 258 24 inlet;
+#X obj 443 206 makefilename /speed/%d;
+#X obj 443 238 makefilename /smooth/%d;
 #X connect 0 0 12 0;
 #X connect 1 0 8 1;
 #X connect 2 0 9 1;
@@ -87,20 +93,33 @@
 #X connect 12 0 1 0;
 #X connect 12 0 3 0;
 #X connect 12 0 2 0;
-#X restore 438 178 pd one_motor_only;
-#X obj 502 113 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X connect 12 0 17 0;
+#X connect 12 0 18 0;
+#X connect 13 0 11 0;
+#X connect 14 0 11 0;
+#X connect 15 0 13 0;
+#X connect 16 0 14 0;
+#X connect 17 0 13 1;
+#X connect 18 0 14 1;
+#X restore 438 208 pd one_motor_only;
+#X obj 509 68 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X msg 471 58 red;
-#X msg 471 88 blue;
+#X msg 475 36 red;
+#X msg 502 38 blue;
 #X msg 310 130 /app/close \$0;
 #X obj 213 52 tgl 32 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
+#X msg 448 36 off;
+#X obj 542 89 hsl 128 15 0 250 0 0 empty empty speed -2 -8 0 10 -262144
+-1 -1 0 0;
+#X obj 563 129 hsl 128 15 0 100 0 0 empty empty smooth -2 -8 0 10 -262144
+-1 -1 0 0;
 #X connect 0 0 1 0;
 #X connect 0 0 3 0;
 #X connect 2 0 0 0;
 #X connect 4 0 2 0;
 #X connect 5 0 13 0;
-#X connect 6 0 13 3;
+#X connect 6 0 13 5;
 #X connect 8 0 7 0;
 #X connect 9 0 8 0;
 #X connect 10 0 12 0;
@@ -110,3 +129,6 @@
 #X connect 16 0 13 1;
 #X connect 17 0 7 0;
 #X connect 18 0 10 1;
+#X connect 19 0 13 1;
+#X connect 20 0 13 3;
+#X connect 21 0 13 4;

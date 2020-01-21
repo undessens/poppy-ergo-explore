@@ -25,15 +25,17 @@ class poppy_motor:
 		print("update")
 		self.position = self.motor_instance.present_position
 		diff = self.asked_position - self.position
-		if(abs(diff)>0):
+		if(abs(diff)>1):
 			smoothPos = self.position + (diff*self.smooth)
-			#self.moveTo(smoothPos)
-		print(" motor "+str(id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos))
+			self.moveTo(smoothPos)
+		else:
+			print("Position reached")
+		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos))
 
 
-	def moveTo(self, dist):
-		print(" move to "+str(dist))
-		self.motor_instance.goal_position = dist
+	def moveTo(self, directPos):
+		print(" move to "+str(directPos))
+		self.motor_instance.goal_position = directPos
 
 
 	def setCompliant(self, isCompliant):
@@ -44,6 +46,13 @@ class poppy_motor:
 	def setLedColor(self, colorMsg):
 		self.motor_instance.led = colorMsg
 		print(" Motor led set to : "+colorMsg)
+
+	def setSmooth(self, newSmooth):
+		if(newSmooth<100 and newSmooth>0):
+			self.smooth = newSmooth/100.0
+			print(" Motor smooth set to : "+str(self.smooth))
+		else:
+			print("Smooth out of range, should be between 0 and 100")
 	
 	def setSpeed(self, newSpeed):
 		self.motor_instance.moving_speed = newSpeed

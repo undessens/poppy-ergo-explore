@@ -19,6 +19,7 @@ from OSC import OSCClient, OSCMessage, OSCServer
 
 class SimpleServer(OSCServer):
     maxPingDelay = 6
+    global sleepingValue
     # OpenStageControls script pings every 3 seconds
     def __init__(self,t):
         OSCServer.__init__(self,t)
@@ -55,6 +56,11 @@ class SimpleServer(OSCServer):
             print("motor id:"+splitAddress[2]+" speed: "+str(data[0]))
             num = int(splitAddress[2])
             list_of_motor[num].setSpeed(data[0])
+        
+        if(splitAddress[1]=="smooth"):
+            print("motor id:"+splitAddress[2]+" smooth: "+str(data[0]))
+            num = int(splitAddress[2])
+            list_of_motor[num].setSmooth(data[0])
 
         ############## entire robot #############
         if(splitAddress[1]=="robot"):
@@ -68,7 +74,9 @@ class SimpleServer(OSCServer):
             if(splitAddress[2]=="close"):
                 print("closing the app")
                 closing_app()
-
+            if(splitAddress[2]=="fps"):
+                print("changing fps - sleeping value")
+                sleepingValue = data[0]
 
         
 
@@ -143,12 +151,14 @@ def main():
         time.sleep(4)
 
         global runningApp
+        global sleepingValue
         runningApp = True
+        sleepingValue = 1
 
         while runningApp:
             try:
                 update_robot()
-                time.sleep(1)
+                time.sleep(sleepingValue)
             except :
                 print("User attempt to close the programm")
                 runningApp = False
