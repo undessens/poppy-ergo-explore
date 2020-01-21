@@ -51,6 +51,11 @@ class SimpleServer(OSCServer):
             num = int(splitAddress[2])
             list_of_motor[num].setLedColor(data[0])
 
+        if(splitAddress[1]=="speed"):
+            print("motor id:"+splitAddress[2]+" speed: "+str(data[0]))
+            num = int(splitAddress[2])
+            list_of_motor[num].setSpeed(data[0])
+
         ############## entire robot #############
         if(splitAddress[1]=="robot"):
             if(splitAddress[2]=="compliant"):
