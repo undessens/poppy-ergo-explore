@@ -76,7 +76,7 @@ class SimpleServer(OSCServer):
                 print("closing the app")
                 closing_app()
             if(splitAddress[2]=="fps"):
-                print("changing fps - sleeping value")
+                print("changing fps - sleeping value: "+str(data[0]))
                 sleepingValue = data[0]
 
         
