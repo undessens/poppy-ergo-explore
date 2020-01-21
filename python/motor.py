@@ -30,6 +30,7 @@ class poppy_motor:
 			self.moveTo(smoothPos)
 		else:
 			print("Position reached")
+			smoothPos = self.position
 		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos))
 
 
