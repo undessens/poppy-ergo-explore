@@ -24,13 +24,15 @@ class poppy_motor:
 		print("update")
 		self.position = self.motor_instance.present_position
 		diff = self.asked_position - self.position
-		if(abs(diff)>1):
-			smoothPos = self.position + (diff*self.smooth)
+		if(abs(diff)>2):
+			res = diff*1.0*self.smooth
+			smoothPos = self.position + res
 			self.moveTo(smoothPos)
 		else:
 			print("Position reached")
 			smoothPos = self.position
-		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos))
+			res = 0
+		print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res))
 
 
 	def moveTo(self, directPos):
