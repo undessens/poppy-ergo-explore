@@ -32,12 +32,12 @@ class poppy_motor:
 			#1st half
 			if(self.speed < 255):
 				newSpeed = self.speed*1.08
-				self.setSpeed(self.newSpeed)
+				self.setSpeed(newSpeed)
 		else:
 			#2nd half
 			if(self.speed>15):
 				newSpeed = self.speed*0.93
-				self.setSpeed(self.newSpeed)
+				self.setSpeed(newSpeed)
 
 		#print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res)+ "smooth: "+str(self.smooth))
 
