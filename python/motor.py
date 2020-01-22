@@ -27,10 +27,12 @@ class poppy_motor:
 		#UPDATE POSITION
 		self.position = self.motor_instance.present_position
 
+		#Todo : IS THE MOTOR MOVING OR NOT, if yes, calculate position
+
 		#CALCUTE POSITION ( 1st half or 2nd half of the entire trajectory)
-		if(abs(self.position - self.starting_position) < (abs(self.starting_position - self.asked_position)/2)):
+		if(abs(self.position - self.starting_position) < (abs(self.starting_position - self.asked_position)/3)):
 			#1st half
-			if(self.speed < 255):
+			if(self.speed < 70):
 				newSpeed = self.speed*1.08
 				self.setSpeed(newSpeed)
 		else:

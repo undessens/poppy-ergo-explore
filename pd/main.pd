@@ -4,10 +4,10 @@
 #X obj 22 19 mrpeach/udpreceive 9999;
 #X obj 32 94 print fromMrPeach;
 #X msg 22 -4 port 9999;
-#X obj 540 -11 hsl 128 15 -23 25 0 0 empty empty position\ to\ reach
--2 -8 0 10 -262144 -1 -1 10800 0;
+#X obj 540 -11 hsl 128 15 -80 80 0 0 empty empty position\ to\ reach
+-2 -8 0 10 -262144 -1 -1 4100 0;
 #X obj 640 192 hradio 23 0 0 6 empty empty empty 0 -8 0 10 -262144
--1 -1 5;
+-1 -1 0;
 #X obj 297 254 s toOSC;
 #X msg 298 132 /robot/compliant \$1;
 #X obj 249 109 tgl 16 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -22,7 +22,7 @@
 #X msg 331 120 disconnect;
 #X obj 109 124 list prepend send;
 #X msg 109 151 \$1 \$2 \$3;
-#X obj 264 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 264 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 48 211 print;
 #X obj 253 24 inlet;
@@ -30,7 +30,7 @@
 #X obj 516 90 loadbang;
 #X obj 454 89 sel 1 0;
 #X msg 523 118 disconnect;
-#X obj 456 59 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 456 59 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 445 22 inlet;
 #X msg 491 161 connect 192.168.2.6 12344;
@@ -55,7 +55,7 @@
 #X connect 17 0 16 0;
 #X connect 18 0 2 0;
 #X restore 171 100 pd osc;
-#X obj 169 51 tgl 34 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 169 51 tgl 34 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 172 133 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
@@ -102,12 +102,12 @@
 #X connect 17 0 13 1;
 #X connect 18 0 14 1;
 #X restore 541 222 pd one_motor_only;
-#X obj 612 82 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 612 82 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 578 50 red;
 #X msg 605 52 blue;
 #X msg 323 226 /app/close \$0;
-#X obj 213 52 tgl 32 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 213 52 tgl 32 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 551 50 off;
 #X obj 645 103 hsl 128 15 0 250 0 0 empty empty speed -2 -8 0 10 -262144
@@ -116,7 +116,7 @@
 -1 -1 8100 0;
 #X floatatom 533 14 5 0 0 0 - - -, f 5;
 #X obj 323 159 hsl 128 15 0 1 0 0 empty empty fps -2 -8 0 10 -262144
--1 -1 400 0;
+-1 -1 2300 0;
 #X msg 323 178 /app/fps \$1;
 #X obj 270 10 hsl 128 15 0 250 0 0 empty empty speed -2 -8 0 10 -262144
 -1 -1 600 0;
@@ -130,7 +130,7 @@
 -1 -1 1;
 #X msg 34 225 /pos/record \$1;
 #X obj 34 282 hradio 23 0 0 8 empty empty load 0 -8 0 10 -262144 -1
--1 0;
+-1 1;
 #X msg 34 316 /pos/load \$1;
 #X obj 35 252 s toOSC;
 #X obj 35 348 s toOSC;
