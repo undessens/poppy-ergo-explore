@@ -6,6 +6,8 @@ import threading
 import struct
 import platform
 import socket
+from os import path
+import json
 
 
 if( platform.system()=='Darwin'):
@@ -16,6 +18,13 @@ else:
     from pypot.creatures import PoppyErgoJr
     
 from OSC import OSCClient, OSCMessage, OSCServer
+
+global runningApp
+global sleepingValue
+global list_of_motor
+global ergoJr 
+global oscClient
+global listOfPos
 
 class SimpleServer(OSCServer):
     maxPingDelay = 6
@@ -74,6 +83,18 @@ class SimpleServer(OSCServer):
             if(splitAddress[2]=="posture"):
                 print("do something")
 
+        ############## POS system #############
+        if(splitAddress[1]=="pos"):
+            if(splitAddress[2]=="load"):
+                loadPos(data[0])
+            if(splitAddress[2]=="record"):
+                recordPos(data[0])
+            if(splitAddress[2]=="saveLib"):
+                savePosToJSON(data[0])
+            if(splitAddress[2]=="loadLib"):
+                loadPosFromJSON(data[0])
+
+
         ############## APP itself #############
         if(splitAddress[1]=="app"):
             if(splitAddress[2]=="close"):
@@ -82,12 +103,7 @@ class SimpleServer(OSCServer):
             if(splitAddress[2]=="fps"):
                 print("changing fps - sleeping value: "+str(data[0]))
                 sleepingValue = data[0]
-
-        
-
-
-
-
+                
 def send_osc(address, value):
         print ("OSC addresse: "+str(address)+" value: "+str(value))
         oscMsg = OSCMessage()
@@ -98,31 +114,6 @@ def send_osc(address, value):
         except: 
                 print ("error sending osc message")
 
-def update_robot():
-    for i in range(6 ):
-            list_of_motor[i].update()
-
-
-def set_compliant_robot(isCompliant):
-    for i in range(6 ):
-            list_of_motor[i].setCompliant(isCompliant)
-
-def set_smooth_robot(newSmooth):
-    for i in range(6 ):
-            list_of_motor[i].setSmooth(newSmooth)
-
-def set_speed_robot(newSpeed):
-    for i in range(6 ):
-            list_of_motor[i].setSpeed(newSpeed)
-
-def init_robot_pos():
-    set_speed_robot(240)
-    set_smooth_robot(9) #this is 4%
-    set_compliant_robot(False)
-
-
-
-
 def main():
         # CREATE INSTANCE OF POPPY MOTOR
         global list_of_motor 
@@ -130,14 +121,11 @@ def main():
         for i in range(6 ):
             list_of_motor.append (poppy_motor(i+1) )
 
- 
-        global ergoJr 
         if( platform.system()=='Linux'):
             ergoJr = PoppyErgoJr(camera='dummy')
             print("REAL MOTORS")
    
         # OSC connect
-        global oscClient
         oscClient = OSCClient()
         oscClient.connect( ("localhost",12345 ))
 
@@ -146,10 +134,13 @@ def main():
             print("REAL MOTORS : motors init")
             for m in list_of_motor :
                 m.motor_instance = ergoJr.motors[(m.id -1)]
-
-                
+       
         #INIT ROBOT POS
         init_robot_pos()
+
+        #INIT LIST OF POS
+        loadPosFromJSON(1)
+        print (listOfPos)
         
         #SET LOCAL IP ADRESS
         if(len(sys.argv)>1):
@@ -206,6 +197,66 @@ def closing_app():
     global runningApp
     runningApp = False
     print("Closing App")
+
+def update_robot():
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].update()
+
+def set_compliant_robot(isCompliant):
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].setCompliant(isCompliant)
+
+def set_smooth_robot(newSmooth):
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].setSmooth(newSmooth)
+
+def set_speed_robot(newSpeed):
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].setSpeed(newSpeed)
+
+def init_robot_pos():
+    set_speed_robot(240)
+    set_smooth_robot(9) #this is 4%
+    set_compliant_robot(False)
+
+def recordPos(nbPos):
+    global listOfPos
+    print("RECORD POS nb: "+str(nbPos))
+    for nbMotor in range(6):
+        listOfPos[nbPos][nbMotor]=list_of_motor[nbMotor].position
+
+def loadPos(nbPos):
+    global listOfPos
+    print("LOAD POS nb: "+str(nbPos))
+    for nbMotor in range(6):
+        list_of_motor[nbMotor].setValue(listOfPos[nbPos][nbMotor])
+
+# This load the entire list of pos ( todo : call it loadLibPos or loadListOfPos)
+def loadPosFromJSON(nbLib):
+    global listOfPos
+    if(path.isfile("pos/lib"+str(nbLib)+".json")):
+        with open("pos/lib"+str(nbLib)+".json") as f:
+            data = json.load(f)
+            listOfPos=data
+    else:
+        print("json file does not exist")
+        listOfPos = []
+        for nbPos in range(8):
+            listOfPos.append([])
+            for nbMotor in range(6):
+                listOfPos[nbPos].append([])
+                listOfPos[nbPos][nbMotor] = 0
+
+# This save the entire lib : listOfPos
+def savePosToJSON(nbLib):
+    print("save list of pos to JSON :"+str(nbLib))
+    print(listOfPos)
+    with open("pos/lib"+str(nbLib)+".json", 'w') as json_file:
+        json.dump(listOfPos, json_file)
 
 if __name__ == "__main__":
     main()

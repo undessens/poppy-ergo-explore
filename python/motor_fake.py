@@ -17,16 +17,16 @@ class poppy_motor:
 			print (newVal)
 			self.currentValue = newVal
 			self.isModified = True
-			self.moveTo(newVal)
+			self.asked_position = newVal
 
 	def update(self):
 		#Can smooth the final value send in OSC, using an easing method
-		diff = self.asked_position - self.position
-		if(abs(diff)>0):
-			self.moveTo(self.position + diff*self.smooth)
+		self.position = self.asked_position
+		self.moveTo(self.position)
 
 	def moveTo(self, dist):
-		print(" move to "+str(dist))
+		#print(" move to "+str(dist))
+		time.sleep(0.001)
 
 	def setCompliant(self, isCompliant):
 		print(" Motor compliant set to : ")
@@ -34,6 +34,18 @@ class poppy_motor:
 
 	def setLedColor(self, colorMsg):
 		print(" Motor led set to : "+colorMsg)
+
+	def setSpeed(self, newSpeed):
+		print(" Motor speed set to : "+str(newSpeed))
+	
+	def setSmooth(self, newSmooth):
+		if(newSmooth<100 and newSmooth>0):
+			self.smooth = newSmooth/100.0
+			print(" Motor smooth set to : "+str(self.smooth))
+		else:
+			print("Smooth out of range, should be between 0 and 100")
+
+	
 
 
 

@@ -5,6 +5,7 @@ class poppy_motor:
 		self.id = _id
 		self.position  = 0
 		self.asked_position = 0
+		self.starting_position = 0
 		self.compliant = False
 		self.led = "black"
 		self.motor_instance = None
@@ -17,20 +18,27 @@ class poppy_motor:
 			self.currentValue = newVal
 			self.isModified = True
 			self.asked_position = newVal
+			#MOVE DIRECTLY TO POS BUT SMOOTH USING SPEED
+			self.moveTo(self.asked_position)
+			self.setSpeed(15)
+			self.starting_position = self.motor_instance.present_position
 
 	def update(self):
-		#SMOOTH MOTION
-		#print("update")
+		#UPDATE POSITION
 		self.position = self.motor_instance.present_position
-		diff = self.asked_position - self.position
-		if(abs(diff)>2):
-			res = diff*1.0*self.smooth
-			smoothPos = self.position + res
-			self.moveTo(smoothPos)
+
+		#CALCUTE POSITION ( 1st half or 2nd half of the entire trajectory)
+		if(abs(self.position - self.starting_position) < (abs(self.starting_position - self.asked_position)/2)):
+			#1st half
+			if(self.speed < 255):
+				newSpeed = self.speed*1.08
+				self.setSpeed(self.newSpeed)
 		else:
-			#print("Position reached")
-			smoothPos = self.position
-			res = 0
+			#2nd half
+			if(self.speed>15):
+				newSpeed = self.speed*0.93
+				self.setSpeed(self.newSpeed)
+
 		#print(" motor "+str(self.id)+ ": position: "+str(self.position)+" asked: "+str(self.asked_position)+" smoothPos: "+str(smoothPos)+" res: "+str(res)+ "smooth: "+str(self.smooth))
 
 
@@ -56,6 +64,10 @@ class poppy_motor:
 			print("Smooth out of range, should be between 0 and 100")
 	
 	def setSpeed(self, newSpeed):
+		if(newSpeed<15 ):
+			newSpeed = 15
+		if(newSpeed>255):
+			newSpeed= 255
 		self.motor_instance.moving_speed = newSpeed
 		self.speed = newSpeed
 		print(" Motor speed set to : "+str(newSpeed))
