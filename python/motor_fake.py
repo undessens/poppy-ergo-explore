@@ -1,7 +1,7 @@
 import time
 
 class poppy_motor:
-	def __init__(self, _id):
+	def __init__(self, _id, _min = -90, _max = 90):
 		self.id = _id
 		self.speed = 50
 		self.position  = 0

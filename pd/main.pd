@@ -22,12 +22,12 @@
 #X obj -48 163 print fromMrPeach;
 #X msg -58 65 port 9999;
 #X obj 248 55 tgl 15 0 empty empty isConnected 17 7 0 10 -204788 -1
--1 1 1;
+-1 0 1;
 #X msg 299 163 connect 192.168.0.20 12344;
 #X msg 491 161 connect 192.168.0.21 12344;
 #X obj 266 221 mrpeach/udpsend;
 #X obj 368 55 tgl 15 0 empty empty isConnected 17 7 0 10 -204788 -1
--1 1 1;
+-1 0 1;
 #X connect 0 0 6 0;
 #X connect 1 0 2 0;
 #X connect 1 0 22 0;
@@ -61,10 +61,10 @@
 #X obj 366 279 motor 0;
 #N canvas 310 103 450 300 recLoad 0;
 #X obj 108 113 hradio 23 0 0 8 empty empty record 0 -8 0 10 -262144
--1 -1 7;
+-1 -1 0;
 #X msg -2 195 /pos/record \$1;
 #X obj 109 156 hradio 23 0 0 8 empty empty load 0 -8 0 10 -262144 -1
--1 3;
+-1 0;
 #X msg 108 236 /pos/load \$1;
 #X obj -1 222 s toOSC;
 #X obj 109 268 s toOSC;
@@ -90,7 +90,6 @@
 #X coords 0 -1 1 1 300 83 2 100 100;
 #X restore 13 97 pd recLoad;
 #N canvas 389 375 450 300 app-settings 0;
-#X msg 12 217 /app/close \$0;
 #X obj 109 113 hsl 128 15 0.001 1 0 0 empty empty fps -2 -8 0 10 -262144
 -1 -1 0 0;
 #X msg 110 217 /app/fps \$1;
@@ -99,10 +98,18 @@
 #X floatatom 287 111 5 0 0 0 - - -, f 5;
 #X obj 111 134 bng 31 250 50 0 empty empty QUIT 41 14 0 10 -164496
 -1 -1;
-#X connect 1 0 3 0;
+#X msg 12 217 /app/close 1;
+#X obj 100 294 s toOSC;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 2 0 1 0;
 #X connect 3 0 4 0;
-#X connect 3 0 2 0;
-#X connect 4 0 5 0;
-#X connect 6 0 0 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
 #X coords 0 -1 1 1 300 69 2 100 100;
 #X restore 13 188 pd app-settings;
+#X text 551 185 max 40;
+#X text 546 234 min - 80;
+#X text 548 254 max 27;
+#X text 550 289 max 65;

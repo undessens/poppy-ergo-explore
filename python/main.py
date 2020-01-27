@@ -78,6 +78,10 @@ class SimpleServer(OSCServer):
                 set_compliant_robot(data[0]>0)
             if(splitAddress[2]=="speed"):
                 set_speed_robot(data[0])
+            if(splitAddress[2]=="speedmax"):
+                set_speedMax_robot(data[0])
+            if(splitAddress[2]=="speedmin"):
+                set_speedMin_robot(data[0])
             if(splitAddress[2]=="smooth"):
                 set_smooth_robot(data[0])
             if(splitAddress[2]=="posture"):
@@ -118,8 +122,13 @@ def main():
         # CREATE INSTANCE OF POPPY MOTOR
         global list_of_motor 
         list_of_motor = []
-        for i in range(6 ):
-            list_of_motor.append (poppy_motor(i+1) )
+
+        list_of_motor.append (poppy_motor(1, -90, 65) ) #bas
+        list_of_motor.append (poppy_motor(2, -80, 27) )
+        list_of_motor.append (poppy_motor(3, -90, 40) )
+        list_of_motor.append (poppy_motor(4, -90, 90) )
+        list_of_motor.append (poppy_motor(5, 90, 90) )
+        list_of_motor.append (poppy_motor(6, 90, 90) ) #haut
 
         if( platform.system()=='Linux'):
             ergoJr = PoppyErgoJr(camera='dummy')
@@ -217,6 +226,16 @@ def set_speed_robot(newSpeed):
     global list_of_motor
     for i in range(6 ):
             list_of_motor[i].setSpeed(newSpeed)
+
+def set_speedMax_robot(newSpeed):
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].speedMax = newSpeed
+
+def set_speedMin_robot(newSpeed):
+    global list_of_motor
+    for i in range(6 ):
+            list_of_motor[i].speedMin = newSpeed
 
 def init_robot_pos():
     set_speed_robot(240)

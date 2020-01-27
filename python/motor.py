@@ -1,7 +1,7 @@
 import time
 
 class poppy_motor:
-	def __init__(self, _id, min=-130, max=130):
+	def __init__(self, _id, min=-90, max=90):
 		self.id = _id
 		self.position  = 0
 		self.asked_position = 0
@@ -41,7 +41,7 @@ class poppy_motor:
 		# at the app pov, send an OSC signal when all the motor are in a reached position ( position done)
 
 		#CALCUTE POSITION ( 1st half or 2nd half of the entire trajectory)
-		if(abs(self.position - self.starting_position) < (abs(self.starting_position - self.asked_position)/2.5)):
+		if(abs(self.position - self.starting_position) < (abs(self.starting_position - self.asked_position)/2.2)):
 			#1st half
 			if(self.speed < self.speedMax):
 				newSpeed = self.speed*( 1.0 + self.smooth)
