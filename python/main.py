@@ -289,7 +289,7 @@ def sendActualRobotPos():
     oscmsg.setAddress("/robot/entirePos")
     for nbMotor in range(6):
         oscmsg.append(list_of_motor[nbMotor].position)
-    OSCClient.send(oscmsg)
+    oscClient.send(oscmsg)
 
 
 if __name__ == "__main__":
