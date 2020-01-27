@@ -162,6 +162,7 @@ def main():
             
 
         # OSC connect
+        global oscClient
         oscClient = OSCClient()
         oscClient.connect( (regieip ,regieport ))
 
@@ -285,6 +286,7 @@ def savePosToJSON(nbLib):
         json.dump(listOfPos, json_file)
 
 def sendActualRobotPos():
+    global oscClient
     oscmsg = OSCMessage()
     oscmsg.setAddress("/robot/entirePos")
     for nbMotor in range(6):
