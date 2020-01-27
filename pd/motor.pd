@@ -1,8 +1,8 @@
 #N canvas 565 190 512 305 10;
 #X obj 103 113 hsl 128 15 -90 90 0 0 empty empty position\ to\ reach
-13 -8 0 10 -262144 -1 -1 1341 0;
+13 -8 0 10 -262144 -1 -1 8467 0;
 #X obj 103 133 tgl 15 0 empty empty compliant 17 7 0 10 -262144 -1
--1 0 1;
+-1 1 1;
 #X msg 221 228 red;
 #X msg 248 228 blue;
 #X msg 194 228 off;
@@ -10,31 +10,42 @@
 #X obj -15 133 prepend /motor/\$1;
 #X obj 190 258 prepend /led/\$1;
 #X obj -2 188 prepend /compliant/\$1;
-#X obj 196 134 hradio 15 0 0 4 empty empty empty 0 -8 0 10 -262144
+#X obj 196 134 hradio 15 0 0 5 empty empty empty 0 -8 0 10 -262144
 -1 -1 0;
-#X obj 194 197 sel 0 1 2 3;
 #X floatatom 238 112 5 0 0 0 - - -, f 5;
 #X obj 117 306 s toOSC\$2;
 #X obj 89 12 r robot\$2motor\$1;
 #X msg 90 43 set \$1;
 #X obj 214 12 r robot\$2set\$1;
-#X connect 0 0 11 0;
+#X obj 194 197 sel 0 1 2 3 4;
+#X msg 320 229 white;
+#X obj 309 11 r robot\$2compliant\$1;
+#X obj 309 53 r robot\$2led\$1;
+#X obj 309 33 r robot\$2compliant;
+#X obj 309 73 r robot\$2led;
+#X connect 0 0 10 0;
 #X connect 1 0 8 0;
 #X connect 2 0 7 0;
 #X connect 3 0 7 0;
 #X connect 4 0 7 0;
 #X connect 5 0 7 0;
-#X connect 6 0 12 0;
-#X connect 7 0 12 0;
-#X connect 8 0 12 0;
-#X connect 9 0 10 0;
-#X connect 10 0 4 0;
-#X connect 10 1 2 0;
-#X connect 10 2 3 0;
-#X connect 10 3 5 0;
-#X connect 11 0 6 0;
-#X connect 13 0 14 0;
+#X connect 6 0 11 0;
+#X connect 7 0 11 0;
+#X connect 8 0 11 0;
+#X connect 9 0 15 0;
+#X connect 10 0 6 0;
+#X connect 12 0 13 0;
+#X connect 13 0 0 0;
+#X connect 13 0 10 0;
 #X connect 14 0 0 0;
-#X connect 14 0 11 0;
-#X connect 15 0 0 0;
+#X connect 15 0 4 0;
+#X connect 15 1 2 0;
+#X connect 15 2 3 0;
+#X connect 15 3 5 0;
+#X connect 15 4 16 0;
+#X connect 16 0 7 0;
+#X connect 17 0 1 0;
+#X connect 18 0 9 0;
+#X connect 19 0 1 0;
+#X connect 20 0 9 0;
 #X coords 0 -1 1 1 175 52 2 100 100;

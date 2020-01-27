@@ -82,5 +82,5 @@ class poppy_motor:
 			newSpeed= 255
 		self.motor_instance.moving_speed = newSpeed
 		self.speed = newSpeed
-		print(" Motor speed set to : "+str(newSpeed))
+		#print(" Motor speed set to : "+str(newSpeed))
 
