@@ -86,6 +86,8 @@ class SimpleServer(OSCServer):
                 set_smooth_robot(data[0])
             if(splitAddress[2]=="posture"):
                 print("do something")
+            if(splitAddress[2]=="getposition"):
+                sendActualRobotPos();
 
         ############## POS system #############
         if(splitAddress[1]=="pos"):
@@ -128,16 +130,12 @@ def main():
         list_of_motor.append (poppy_motor(3, -90, 40) )
         list_of_motor.append (poppy_motor(4, -90, 90) )
         list_of_motor.append (poppy_motor(5, -90, 90) )
-        list_of_motor.append (poppy_motor(6, -90, 90) ) #haut
+        list_of_motor.append (poppy_motor(6, -25, 90) ) #haut
 
         if( platform.system()=='Linux'):
             ergoJr = PoppyErgoJr(camera='dummy')
             print("REAL MOTORS")
    
-        # OSC connect
-        oscClient = OSCClient()
-        oscClient.connect( ("localhost",12345 ))
-
         #ASSOCIATE ERGOJR TO MOTORS INSTANCE
         if( platform.system()=='Linux'):
             print("REAL MOTORS : motors init")
@@ -152,11 +150,20 @@ def main():
         print (listOfPos)
         
         #SET LOCAL IP ADRESS
-        if(len(sys.argv)>1):
+        if(len(sys.argv)>3):
             myip = str(sys.argv[1])
+            regieip = str(sys.argv[2])
+            regieport = str(sys.argv[3])
         else:
             myip = socket.gethostbyname(socket.gethostname())
+            regieip = "localhost"
+            regieport = 12345
         print("IP adress is : "+myip)
+            
+
+        # OSC connect
+        oscClient = OSCClient()
+        oscClient.connect( (regieip ,regieport ))
 
         # CREATE OSC SERVER
         try:
@@ -276,6 +283,14 @@ def savePosToJSON(nbLib):
     print(listOfPos)
     with open("pos/lib"+str(nbLib)+".json", 'w') as json_file:
         json.dump(listOfPos, json_file)
+
+def sendActualRobotPos():
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/robot/entirePos")
+    for nbMotor in range(6):
+        oscmsg.append(list_of_motor[nbMotor].position)
+    OSCClient.send(oscmsg)
+
 
 if __name__ == "__main__":
     main()
