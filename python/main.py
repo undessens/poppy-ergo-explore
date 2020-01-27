@@ -153,7 +153,7 @@ def main():
         if(len(sys.argv)>3):
             myip = str(sys.argv[1])
             regieip = str(sys.argv[2])
-            regieport = str(sys.argv[3])
+            regieport = int(sys.argv[3])
         else:
             myip = socket.gethostbyname(socket.gethostname())
             regieip = "localhost"
