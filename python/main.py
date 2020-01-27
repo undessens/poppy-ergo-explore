@@ -286,6 +286,7 @@ def savePosToJSON(nbLib):
         json.dump(listOfPos, json_file)
 
 def sendActualRobotPos():
+    print("Send actual Robot Pos")
     global oscClient
     oscmsg = OSCMessage()
     oscmsg.setAddress("/robot/entirePos")
