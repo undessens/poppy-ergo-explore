@@ -126,8 +126,8 @@ def main():
         list_of_motor = []
 
         list_of_motor.append (poppy_motor(1, -90, 65) ) #bas
-        list_of_motor.append (poppy_motor(2, -80, 27) )
-        list_of_motor.append (poppy_motor(3, -40, 90) )
+        list_of_motor.append (poppy_motor(2, -80, 80) )
+        list_of_motor.append (poppy_motor(3, -80, 90) )
         list_of_motor.append (poppy_motor(4, -90, 90) )
         list_of_motor.append (poppy_motor(5, -90, 90) )
         list_of_motor.append (poppy_motor(6, -25, 90) ) #haut

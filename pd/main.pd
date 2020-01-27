@@ -1,4 +1,4 @@
-#N canvas 411 63 1018 451 10;
+#N canvas 111 78 1018 451 10;
 #N canvas 282 31 1101 621 osc 0;
 #X obj 110 179 mrpeach/packOSC;
 #X obj 110 219 mrpeach/udpsend;
@@ -99,10 +99,10 @@
 #X restore 13 9 pd osc;
 #N canvas 102 83 671 311 recLoad 0;
 #X obj 108 114 hradio 12 0 0 16 empty empty record 0 -8 0 10 -262144
--1 -1 2;
+-1 -1 6;
 #X msg 3 186 /pos/record \$1;
 #X obj 109 141 hradio 12 0 0 16 empty empty load 0 -8 0 10 -262144
--1 -1 1;
+-1 -1 6;
 #X msg 108 256 /pos/load \$1;
 #X obj 27 155 i 0;
 #X obj 344 106 bng 23 250 50 0 empty empty empty 17 7 0 10 -259610
@@ -135,11 +135,12 @@
 #X connect 14 0 15 0;
 #X connect 15 0 7 0;
 #X connect 15 1 2 0;
+#X connect 15 1 0 0;
 #X coords 0 -1 1 1 277 65 2 100 100;
 #X restore 336 371 pd recLoad;
 #N canvas 389 375 450 300 app-settings 0;
 #X obj 109 113 hsl 128 15 0.001 1 0 0 empty empty fps -2 -8 0 10 -262144
--1 -1 0 0;
+-1 -1 1000 0;
 #X msg 110 217 /app/fps \$1;
 #X floatatom 248 111 5 0 0 0 - - -, f 5;
 #X obj 219 191 pow -1;
@@ -162,10 +163,10 @@
 -1;
 #N canvas 102 83 671 311 recLoad 0;
 #X obj 108 114 hradio 12 0 0 16 empty empty record 0 -8 0 10 -262144
--1 -1 2;
-#X msg 3 186 /pos/record \$1;
+-1 -1 6;
+#X msg 3 226 /pos/record \$1;
 #X obj 109 138 hradio 12 0 0 16 empty empty load 0 -8 0 10 -262144
--1 -1 1;
+-1 -1 6;
 #X msg 108 256 /pos/load \$1;
 #X obj 27 155 i 0;
 #X obj 344 106 bng 23 250 50 0 empty empty empty 17 7 0 10 -259610
@@ -175,68 +176,173 @@
 -1;
 #X obj 167 228 + 1;
 #X floatatom 305 137 5 0 0 0 - - -, f 5;
-#X floatatom 305 110 5 0 0 0 - - -, f 5;
-#X obj 64 160 + 1;
-#X obj -1 222 s toOSC2;
+#X floatatom 305 111 5 0 0 0 - - -, f 5;
+#X obj -1 262 s toOSC2;
 #X obj 109 288 s toOSC2;
 #X obj 68 32 r loadPos;
-#X obj 68 62 t b f;
+#X obj 44 62 t b f;
+#X obj 40 192 + 1;
 #X connect 0 0 4 1;
 #X connect 0 0 10 0;
-#X connect 1 0 12 0;
+#X connect 1 0 11 0;
 #X connect 2 0 6 1;
 #X connect 2 0 9 0;
-#X connect 3 0 13 0;
+#X connect 3 0 12 0;
 #X connect 4 0 1 0;
-#X connect 4 0 11 0;
+#X connect 4 0 15 0;
 #X connect 5 0 4 0;
 #X connect 6 0 3 0;
 #X connect 6 0 8 0;
 #X connect 7 0 6 0;
 #X connect 8 0 2 0;
-#X connect 9 0 10 0;
-#X connect 11 0 0 0;
-#X connect 14 0 15 0;
-#X connect 15 0 7 0;
-#X connect 15 1 2 0;
+#X connect 13 0 14 0;
+#X connect 14 0 7 0;
+#X connect 14 1 2 0;
+#X connect 14 1 0 0;
+#X connect 15 0 0 0;
 #X coords 0 -1 1 1 277 65 2 100 100;
-#X restore 730 370 pd recLoad;
+#X restore 685 372 pd recLoad;
 #X obj 365 2 motor 5 1;
 #X obj 365 57 motor 4 1;
 #X obj 366 112 motor 3 1;
 #X obj 366 168 motor 2 1;
 #X obj 366 225 motor 1 1;
 #X obj 366 279 motor 0 1;
-#X obj 782 5 motor 5 2;
-#X obj 782 60 motor 4 2;
-#X obj 783 115 motor 3 2;
-#X obj 783 171 motor 2 2;
-#X obj 783 228 motor 1 2;
-#X obj 783 282 motor 0 2;
+#X obj 812 5 motor 5 2;
+#X obj 812 60 motor 4 2;
+#X obj 813 115 motor 3 2;
+#X obj 813 171 motor 2 2;
+#X obj 813 228 motor 1 2;
+#X obj 813 282 motor 0 2;
 #N canvas 102 83 671 311 globalLoad 0;
 #X obj 109 118 hradio 12 0 0 16 empty empty load 0 -8 0 10 -262144
--1 -1 1;
+-1 -1 6;
 #X obj 108 206 i 0;
 #X obj 344 113 bng 23 250 50 0 empty empty empty 17 7 0 10 -40914 -1
 -1;
 #X obj 167 228 + 1;
-#X floatatom 305 117 5 0 0 0 - - -, f 5;
+#X floatatom 116 141 5 0 0 0 - - -, f 5;
 #X obj 109 288 s loadPos;
+#X floatatom 308 117 5 0 0 0 Last - -, f 5;
 #X connect 0 0 1 1;
 #X connect 0 0 4 0;
 #X connect 1 0 3 0;
 #X connect 1 0 5 0;
+#X connect 1 0 6 0;
 #X connect 2 0 1 0;
 #X connect 3 0 0 0;
-#X coords 0 -1 1 1 277 44 2 100 100;
+#X coords 0 -1 1 1 278 63 2 100 100;
 #X restore 15 175 pd globalLoad;
 #X obj 168 336 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X msg 168 387 /robot/getposition 1;
-#X obj 187 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 187 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 190 299 metro 1000;
 #X obj 168 417 s toOSC;
+#N canvas 858 54 440 531 robot 0;
+#X obj 256 496 s robot1set1;
+#X obj 259 437 * 1;
+#X obj 324 440 * -1;
+#X obj 336 498 s robot1set2;
+#X obj 239 410 t f f;
+#X obj 131 218 vsl 49 105 -90 90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 6760 0;
+#X obj 103 331 hsl 100 39 -90 90 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 5170 0;
+#X obj 107 483 s robot1set0;
+#X obj 103 175 hsl 100 39 -90 90 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 5940 0;
+#X obj 233 229 s robot1set3;
+#X obj 131 62 vsl 49 105 90 -90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 2773 0;
+#X obj 122 23 vsl 71 30 -90 90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 2111 0;
+#X obj 236 167 s robot1set4;
+#X obj 237 119 s robot1set5;
+#X obj 260 39 r robot1motor5;
+#X msg 260 62 set \$1;
+#X msg 332 113 set \$1;
+#X obj 332 90 r robot1motor4;
+#X msg 337 174 set \$1;
+#X obj 337 151 r robot1motor3;
+#X msg 328 252 set \$1;
+#X obj 328 229 r robot1motor1;
+#X msg 226 316 set \$1;
+#X obj 226 293 r robot1motor0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 4 0 1 0;
+#X connect 4 1 2 0;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 8 0 9 0;
+#X connect 10 0 12 0;
+#X connect 11 0 13 0;
+#X connect 14 0 15 0;
+#X connect 15 0 11 0;
+#X connect 16 0 10 0;
+#X connect 17 0 16 0;
+#X connect 18 0 8 0;
+#X connect 19 0 18 0;
+#X connect 20 0 5 0;
+#X connect 21 0 20 0;
+#X connect 22 0 6 0;
+#X connect 23 0 22 0;
+#X coords 0 -1 1 1 112 352 1 100 21;
+#X restore 551 4 pd robot 1;
+#N canvas 858 54 440 531 robot 0;
+#X obj 259 437 * 1;
+#X obj 324 440 * -1;
+#X obj 239 410 t f f;
+#X obj 131 218 vsl 49 105 -90 90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 6760 0;
+#X obj 103 331 hsl 100 39 -90 90 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 8470 0;
+#X obj 103 175 hsl 100 39 -90 90 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 3850 0;
+#X obj 131 62 vsl 49 105 90 -90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 1676 0;
+#X obj 122 23 vsl 71 30 90 -90 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 1837 0;
+#X msg 260 62 set \$1;
+#X msg 332 113 set \$1;
+#X msg 337 174 set \$1;
+#X msg 328 252 set \$1;
+#X msg 226 316 set \$1;
+#X obj 260 39 r robot2motor5;
+#X obj 332 90 r robot2motor4;
+#X obj 337 151 r robot2motor3;
+#X obj 237 119 s robot2set5;
+#X obj 236 167 s robot2set4;
+#X obj 328 229 r robot2motor1;
+#X obj 233 229 s robot2set3;
+#X obj 226 293 r robot2motor0;
+#X obj 256 496 s robot2set1;
+#X obj 336 498 s robot2set2;
+#X obj 107 483 s robot2set0;
+#X connect 0 0 21 0;
+#X connect 1 0 22 0;
+#X connect 2 0 0 0;
+#X connect 2 1 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 23 0;
+#X connect 5 0 19 0;
+#X connect 6 0 17 0;
+#X connect 7 0 16 0;
+#X connect 8 0 7 0;
+#X connect 9 0 6 0;
+#X connect 10 0 5 0;
+#X connect 11 0 3 0;
+#X connect 12 0 4 0;
+#X connect 13 0 8 0;
+#X connect 14 0 9 0;
+#X connect 15 0 10 0;
+#X connect 18 0 11 0;
+#X connect 20 0 12 0;
+#X coords 0 -1 1 1 112 352 1 100 21;
+#X restore 695 4 pd robot 1;
+#X connect 3 0 23 0;
 #X connect 4 0 3 0;
 #X connect 19 0 20 0;
 #X connect 20 0 23 0;
