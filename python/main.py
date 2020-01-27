@@ -173,7 +173,7 @@ def main():
         global runningApp
         global sleepingValue
         runningApp = True
-        sleepingValue = 0.05
+        sleepingValue = 0.02 #fps set to 50Hz
 
         # MAIN LOOP
         while runningApp:
