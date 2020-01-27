@@ -161,9 +161,10 @@ def main():
         print("IP adress is : "+myip)
             
 
-        # OSC connect
+        # OSC CLIENT
         global oscClient
         oscClient = OSCClient()
+        print("OSC client connect to: "+regieip+" port: "+str(regieport))
         oscClient.connect( (regieip ,regieport ))
 
         # CREATE OSC SERVER
@@ -286,13 +287,17 @@ def savePosToJSON(nbLib):
         json.dump(listOfPos, json_file)
 
 def sendActualRobotPos():
-    print("Send actual Robot Pos")
     global oscClient
+    print("Send actual Robot Pos")
     oscmsg = OSCMessage()
     oscmsg.setAddress("/robot/entirePos")
     for nbMotor in range(6):
-        oscmsg.append(list_of_motor[nbMotor].position)
-    oscClient.send(oscmsg)
+        oscmsg.append(int(list_of_motor[nbMotor].position) ) 
+    try:
+        oscClient.send(oscmsg)
+    except: 
+        print ("error sending osc message")
+
 
 
 if __name__ == "__main__":

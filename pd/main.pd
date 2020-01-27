@@ -1,5 +1,5 @@
-#N canvas 325 69 979 474 10;
-#N canvas 344 172 873 597 osc 1;
+#N canvas 469 78 979 474 10;
+#N canvas 628 134 873 620 osc 1;
 #X obj 110 179 mrpeach/packOSC;
 #X obj 110 219 mrpeach/udpsend;
 #X obj 324 92 loadbang;
@@ -7,7 +7,7 @@
 #X msg 331 120 disconnect;
 #X obj 109 124 list prepend send;
 #X msg 109 151 \$1 \$2 \$3;
-#X obj 236 9 tgl 27 0 empty empty adress1 41 9 0 10 -262144 -1 -1 0
+#X obj 236 9 tgl 27 0 empty empty adress1 41 9 0 10 -262144 -1 -1 1
 1;
 #X obj 516 90 loadbang;
 #X obj 454 89 sel 1 0;
@@ -23,7 +23,7 @@
 #X msg 491 161 connect 192.168.0.21 12344;
 #X obj 517 224 mrpeach/udpsend;
 #X obj 368 55 tgl 15 0 empty empty isConnected 17 7 0 10 -204788 -1
--1 1 1;
+-1 0 1;
 #X obj 672 179 mrpeach/packOSC;
 #X obj 671 124 list prepend send;
 #X msg 671 151 \$1 \$2 \$3;
@@ -69,7 +69,6 @@
 #X connect 10 0 18 0;
 #X connect 11 0 9 0;
 #X connect 12 0 13 0;
-#X connect 12 0 14 0;
 #X connect 12 0 28 0;
 #X connect 16 0 1 0;
 #X connect 17 0 18 0;
@@ -82,6 +81,7 @@
 #X connect 25 0 21 0;
 #X connect 26 0 5 0;
 #X connect 27 0 12 0;
+#X connect 27 0 14 0;
 #X connect 28 0 30 0;
 #X connect 29 0 31 0;
 #X connect 29 1 32 0;
@@ -234,8 +234,8 @@
 #X restore 15 175 pd globalLoad;
 #X obj 168 336 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 168 417 s toOSC;
 #X msg 168 387 /robot/getposition 1;
+#X obj 168 417 s toOSC1;
 #X connect 4 0 3 0;
-#X connect 19 0 21 0;
-#X connect 21 0 20 0;
+#X connect 19 0 20 0;
+#X connect 20 0 21 0;
