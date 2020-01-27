@@ -12,8 +12,8 @@ class poppy_motor:
 		self.smooth = 0.03
 		self.posMin = min
 		self.posMax = max
-		self.speedMin = 15
-		self.speedMax = 70
+		self.speedMin = 25
+		self.speedMax = 90
 
 	def setValue(self, newVal):
 		
