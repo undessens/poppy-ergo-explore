@@ -270,10 +270,17 @@ def loadPosFromJSON(nbLib):
         with open("pos/lib"+str(nbLib)+".json") as f:
             data = json.load(f)
             listOfPos=data
+        posToAdd = 16 - len(listOfPos)
+        endOfPos = len(listOfPos)
+        for p in range(posToAdd):
+            listOfPos.append([])
+            for nbMotor in range(6):
+                listOfPos[endOfPos + p].append([])
+                listOfPos[endOfPos + p][nbMotor] = 0
     else:
         print("json file does not exist")
         listOfPos = []
-        for nbPos in range(8):
+        for nbPos in range(16):
             listOfPos.append([])
             for nbMotor in range(6):
                 listOfPos[nbPos].append([])
