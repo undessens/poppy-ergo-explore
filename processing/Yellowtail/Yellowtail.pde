@@ -49,7 +49,7 @@ void setup() {
   oscP5 = new OscP5(this,12342);
   
   bg = color(255);
-  fg = color(127);
+  fg = color(100, 12, 15);
 
 }
 
@@ -58,6 +58,7 @@ void draw() {
   background(bg);
 
   updateGeometry();
+  noStroke();
   fill(fg);
   for (int i = 0; i < nGestures; i++) {
     renderGesture(gestureArray[i], width, height);
@@ -229,6 +230,7 @@ void oscEvent(OscMessage theOscMessage) {
       int g = theOscMessage.get(1).intValue();
       int b = theOscMessage.get(2).intValue();
       fg = color(r,g,b);
+      print("### Forefround changed");
       return;
     }  
   } 
