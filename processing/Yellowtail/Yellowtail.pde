@@ -60,8 +60,8 @@ CURIOSITY-DRIVEN LEARNING
 
  
 void setup() {
-  fullScreen(P2D, 2);
-  //size(640  , 480, P2D);
+  //fullScreen(P2D, 2);
+  size(640  , 480, P2D);
   background(0, 0, 0);
   finalr = 0;
   finalg = 0;
@@ -91,8 +91,9 @@ void setup() {
   clearGestures();
   
   oscP5 = new OscP5(this,12342);
-  
-  font = createFont("Geneva.dfont", 88);
+  String[] fontList = PFont.list();
+  printArray(fontList);
+  font = createFont("Damascus", 88);
   textFont(font);
   textAlign(CENTER, CENTER);
   textx = 950;
