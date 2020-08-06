@@ -17,7 +17,7 @@ class Gesture {
   float jumpDx, jumpDy;
   boolean exists;
   boolean activated;
-  float INIT_TH = 14;
+  float INIT_TH = 40;
   float thickness = INIT_TH;
   
   JSONObject json;

@@ -19,7 +19,7 @@ import oscP5.*;
 import java.awt.Polygon;
 
 Gesture gestureArray[];
-final int nGestures = 36;  // Number of gestures
+final int nGestures = 5;  // Number of gestures
 final int minMove = 13;     // Minimum travel for a new point
 int currentGestureID;
 
@@ -28,15 +28,59 @@ int tmpXp[];
 int tmpYp[];
 
 OscP5 oscP5;
-color bg;
-color fg;
+int askedr;
+int askedg;
+int askedb;
+float finalr;
+float finalg;
+float finalb;
+int askedfr;
+int askedfg;
+int askedfb;
+float finalfr;
+float finalfg;
+float finalfb;
+int askedtr;
+int askedtg;
+int askedtb;
+float finaltr;
+float finaltg;
+float finaltb;
 
-  
+PFont font;
+int textx;
+int texty;
+/*
+EXPERIENCE 8337
+POPPY ERGO EXPLORING
+ANOTHER POPPY ERGO THROUGH
+CURIOSITY-DRIVEN LEARNING
+*/
 
+
+ 
 void setup() {
   //fullScreen(P2D, 2);
-  size(1024, 768, P2D);
+  size(640  , 480, P2D);
   background(0, 0, 0);
+  finalr = 0;
+  finalg = 0;
+  finalb = 0;
+  askedr = 0;
+  askedb = 0;
+  askedg = 0;
+  finalfr = 230;
+  finalfg = 230;
+  finalfb = 230;
+  askedfr = 230;
+  askedfb = 230;
+  askedfg = 230;
+  finaltr = 230;
+  finaltg = 230;
+  finaltb = 230;
+  askedtr = 230;
+  askedtb = 230;
+  askedtg = 230;
   noStroke();
 
   currentGestureID = -1;
@@ -47,21 +91,58 @@ void setup() {
   clearGestures();
   
   oscP5 = new OscP5(this,12342);
-  
-  bg = color(255);
-  fg = color(127);
-
+  String[] fontList = PFont.list();
+  printArray(fontList);
+  font = createFont("Damascus", 88);
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  textx = 950;
+  texty = 250;
+ 
 }
 
 
 void draw() {
-  background(bg);
-
+  
+  //Update foreground
+  float alpha = 0.007;
+  finalr = finalr*( 1.0 - alpha ) + askedr*1.0*alpha;
+  finalg = finalg*( 1.0 - alpha ) + askedg*1.0*alpha;
+  finalb = finalb*( 1.0 - alpha ) + askedb*1.0*alpha;
+  background(color(finalr, finalg, finalb));
+  
+  
+  //Update geometry
   updateGeometry();
-  fill(fg);
+  
+  // Draw Line 
+  noStroke();
+  float alphaForeground = 0.015;
+  finalfr = finalfr*( 1.0 - alphaForeground ) + askedfr*1.0*alpha;
+  finalfg = finalfg*( 1.0 - alphaForeground ) + askedfg*1.0*alpha;
+  finalfb = finalfb*( 1.0 - alphaForeground ) + askedfb*1.0*alpha;
+  fill(color(finalfr, finalfg, finalfb));
   for (int i = 0; i < nGestures; i++) {
     renderGesture(gestureArray[i], width, height);
   }
+  
+  //Draw Text
+  
+    
+  float alphaText = 0.006;
+  finaltr = finaltr*( 1.0 - alphaText ) + askedtr*1.0*alpha;
+  finaltg = finaltg*( 1.0 - alphaText ) + askedtg*1.0*alpha;
+  finaltb = finaltb*( 1.0 - alphaText ) + askedtb*1.0*alpha;
+  if(( finaltr + finaltg + finaltg )> 4){
+  fill(color(finaltr, finaltg, finaltb));
+  String textToDisplay;
+  textToDisplay = "EXPERIENCE 8337 \n POPPY ERGO EXPLORING ANOTHER \n POPPY ERGO THROUGH \n CURIOSITY-DRIVEN LEARNING";
+ 
+  text(textToDisplay, textx, texty);
+  
+  }
+  
+  
 }
 
 void mousePressed() {
@@ -225,10 +306,24 @@ void oscEvent(OscMessage theOscMessage) {
     /* check if the typetag is the right one. */
     if(theOscMessage.checkTypetag("iii")) {
       /* parse theOscMessage and extract the values from the osc message arguments. */
-      int r = theOscMessage.get(0).intValue();
-      int g = theOscMessage.get(1).intValue();
-      int b = theOscMessage.get(2).intValue();
-      fg = color(r,g,b);
+      askedfr = theOscMessage.get(0).intValue();
+      askedfg = theOscMessage.get(1).intValue();
+      askedfb = theOscMessage.get(2).intValue();
+
+      print("### Forefround changed");
+      return;
+    }  
+  } 
+  
+  if(theOscMessage.checkAddrPattern("/text")==true) {
+    /* check if the typetag is the right one. */
+    if(theOscMessage.checkTypetag("iii")) {
+      /* parse theOscMessage and extract the values from the osc message arguments. */
+      askedtr = theOscMessage.get(0).intValue();
+      askedtg = theOscMessage.get(1).intValue();
+      askedtb = theOscMessage.get(2).intValue();
+
+      println("### text changed");
       return;
     }  
   } 
@@ -237,10 +332,10 @@ void oscEvent(OscMessage theOscMessage) {
     /* check if the typetag is the right one. */
     if(theOscMessage.checkTypetag("iii")) {
       /* parse theOscMessage and extract the values from the osc message arguments. */
-      int r = theOscMessage.get(0).intValue();
-      int g = theOscMessage.get(1).intValue();
-      int b = theOscMessage.get(2).intValue();
-      bg = color(r,g,b);
+      askedr = theOscMessage.get(0).intValue();
+      askedg = theOscMessage.get(1).intValue();
+      askedb = theOscMessage.get(2).intValue();
+      
       return;
     }  
   } 
